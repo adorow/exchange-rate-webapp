@@ -1,6 +1,5 @@
 package cx.domain.service;
 
-import com.google.common.base.Objects;
 import cx.domain.entity.UserEntity;
 import cx.domain.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +33,6 @@ public class UserService implements UserDetailsService {
     }
 
     public UserEntity findAndAuthenticateUser(String email, String givenPassword) {
-        // FIXME: for test only:
-        if (Objects.equal(email, "test") && Objects.equal(givenPassword, "a")) {
-            UserEntity fakeUser = new UserEntity();
-            fakeUser.setEmail(email);
-            fakeUser.setPasswordHash(passwordEncoder.encode(givenPassword));
-            return fakeUser;
-        }
-
         UserEntity user = userRepository.findOneByEmail(email);
         if (user == null) {
             return null;
