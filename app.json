@@ -1,0 +1,5 @@
+{
+  "name": "Simple Exchange Rate webapp",
+  "description": "A simple app, deployed to Heroku.",
+  "image": "heroku/java"
+}

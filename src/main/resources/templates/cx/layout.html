@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>Layout</title>
+    <link href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<header class="navbar  navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Simple Exchange Rates Webapp</a>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <p class="navbar-text navbar-right">
+            <span th:if="${#httpServletRequest.remoteUser}">
+                Hello, <span th:text="${#httpServletRequest.remoteUser}"></span>
+                |
+                <input type="submit" class="btn btn-link" value="logout"/>
+            </span>
+
+            <span th:if="${#httpServletRequest.remoteUser == null}">
+                <a th:href="@{/login}">login</a>
+            </span>
+            </p>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    <h1 layout:fragment="header">Layout</h1>
+    <div layout:fragment="content">
+        Fake content
+    </div>
+</div>
+</body>
+</html>

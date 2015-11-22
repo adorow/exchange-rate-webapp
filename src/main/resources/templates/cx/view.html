@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="cx/layout">
+<head>
+    <title>Exchange Rates Conversion Webapp</title>
+</head>
+<body>
+
+
+<h1 layout:fragment="header">Exchange rates</h1>
+
+<div layout:fragment="content"
+     class="container">
+
+    <form th:action="@{/view}" th:object="${exchangeRateQuery}" method="post">
+        <table>
+            <tr>
+                <td>From currency:</td>
+                <td><select th:field="*{fromCurrency}" class="form-control">
+                    <option th:each="currency : ${currenciesList}" th:value="${currency.code}"
+                            th:text="${currency.fullDescription}"/>
+                </select></td>
+            </tr>
+            <tr>
+                <td>To currency:</td>
+                <td><select th:field="*{toCurrency}" class="form-control">
+                    <option th:each="currency : ${currenciesList}" th:value="${currency.code}"
+                            th:text="${currency.fullDescription}"/>
+                </select></td>
+            </tr>
+            <tr>
+                <td>Use historical rate from:</td>
+                <td><input type="date" th:field="*{exchangeRateDate}"
+                           th:value="${(exchangeRateDate != null) ? #dates.format(exchangeRateDate, 'dd.MM.yyyy') : null}"
+                           class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('exchangeRateDate')}" th:errors="*{exchangeRateDate}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Use latest rates:</td>
+                <td><input type="checkbox" th:field="*{latest}" th:value="${latest}" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="query" class="btn btn-default"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <p>&nbsp;</p>
+    <h3>Last queries:</h3>
+    <div th:each="query : ${latestQueries}">
+        <p class="bg-info"
+           th:text="'Exchange rate of ' + ${query.fromCurrency.description} + ' in ' + ${query.toCurrency.description} + ' on ' + ${#dates.format(query.exchangeRateDate, 'dd.MM.yyyy')} + ' was ' + ${query.value}">
+        </p>
+    </div>
+</div>
+</body>
+</html>

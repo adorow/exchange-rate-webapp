@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="cx/layout">
+<head>
+    <title>Exchange Rates Conversion Webapp</title>
+</head>
+<body>
+<h1 layout:fragment="header">Registration</h1>
+
+<div layout:fragment="content"
+     class="container">
+    <form th:action="@{/registration}" th:object="${registrationData}" method="post">
+
+        <table>
+            <tr>
+                <td>E-mail:</td>
+                <td><input type="text" th:field="*{email}" th:value="${email}" class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" th:field="*{password}" class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Repeat password:</td>
+                <td><input type="password" th:field="*{repeatPassword}" class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Birthdate:</td>
+                <td><input type="date" th:field="*{birthdate}"
+                           th:value="${(birthdate != null) ? #dates.format(birthdate, 'dd.MM.yyyy') : null}"
+                           class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Street/number:</td>
+                <td><input type="text" th:field="*{address}" th:value="${address}" class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Postal code:</td>
+                <td><input type="text" th:field="*{postalCode}" th:value="${postalCode}" class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">Name Error</td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td><input type="text" th:field="*{city}" th:value="${city}" class="form-control"/></td>
+                <td th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Name Error</td>
+            </tr>
+            <tr>
+                <td>Country:</td>
+                <td><select th:field="*{country}" class="form-control">
+                    <option th:each="country : ${countriesList}" th:value="${country.code}" th:text="${country.text}"/>
+                </select></td>
+                <td th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name Error</td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="register" class="btn btn-default"/></td>
+            </tr>
+        </table>
+
+    </form>
+
+</div>
+</body>
+</html>
